@@ -1,11 +1,12 @@
 module RestaurantData
-  def data
-    json = retrieve_data
+  def data(city)
+    json = retrieve_data(city)
     create_restaurants json
   end
 
-  def retrieve_data
-    url = 'http://restro.nalwaya.com/restaurants/search.json?city=Chicago'
+  def retrieve_data(city)
+    encoded_city = city.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+    url = "http://restro.nalwaya.com/restaurants/search.json?city=#{encoded_city}"
     json = nil
     begin
       json = JSONParser.parse_from_url url

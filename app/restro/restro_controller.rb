@@ -8,9 +8,12 @@ class RestroController < UITableViewController
 
   def viewDidLoad
     super
-    view.backgroundColor = UIColor.whiteColor
-    myTableView = create_table_view
-    view.addSubview(myTableView)
-  end
+    @restaurants = []
+    search_bar = create_search_bar
+    search_bar.text = 'Chicago'
+    view.tableHeaderView = search_bar
+    view.dataSource = view.delegate = self
+    searchBarSearchButtonClicked(search_bar)
+   end
 
 end
