@@ -24,7 +24,11 @@ module RestroView
 
   def tableView(tableView, cellForRowAtIndexPath:indexPath)
     cell = get_table_cell(tableView)
-    cell.textLabel.text = @restaurants[indexPath.row].name
+    restaurant = @restaurants[indexPath.row]
+    cell.textLabel.text = restaurant.name
+    cell.detailTextLabel.text = restaurant.desc
+    restaurant_image_url = NSURL.URLWithString(restaurant.thumb_url_image)
+    cell.imageView.image = UIImage.alloc.initWithData(NSData.alloc.initWithContentsOfURL(restaurant_image_url))
     cell
   end
 
@@ -32,7 +36,7 @@ module RestroView
     @reuseIdentifier ||= "CELL_IDENTIFIER"
     cell = tableView.dequeueReusableCellWithIdentifier(@reuseIdentifier) ||
         begin
-          UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier: @reuseIdentifier)
+          UITableViewCell.alloc.initWithStyle(UITableViewCellStyleSubtitle, reuseIdentifier: @reuseIdentifier)
         end
     cell
   end
